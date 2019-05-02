@@ -1,0 +1,668 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="db4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="chiplink">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="chip_id" />
+            <PropertyRef Name="price_id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="person_id" Type="int" />
+          <Property Name="chip_id" Type="int" Nullable="false" />
+          <Property Name="price_id" Type="int" Nullable="false" />
+          <Property Name="startdate" Type="datetime" />
+          <Property Name="enddate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="chips">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="paid" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="covers">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_station_id" Type="int" Nullable="false" />
+          <Property Name="fk_chip_id" Type="int" />
+          <Property Name="time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="equipment">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fk_chip_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="permissions">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rolename" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="persons">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="50" />
+          <Property Name="adress" Type="nvarchar" MaxLength="50" />
+          <Property Name="zipcode" Type="int" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="alias" Type="nvarchar" MaxLength="50" />
+          <Property Name="public" Type="bit" />
+          <Property Name="fk_permission_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="prices">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="scoreboard">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_chip_id" Type="int" Nullable="false" />
+          <Property Name="fk_track_id" Type="int" Nullable="false" />
+          <Property Name="start_time" Type="datetime" Nullable="false" />
+          <Property Name="end_time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="stations">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tracks">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="length" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pist" Type="datetime" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_chip_chiplink">
+          <End Role="chips" Type="Self.chips" Multiplicity="1" />
+          <End Role="chiplink" Type="Self.chiplink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chips">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="chiplink">
+              <PropertyRef Name="chip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_chip_scoreboard">
+          <End Role="chips" Type="Self.chips" Multiplicity="1" />
+          <End Role="scoreboard" Type="Self.scoreboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chips">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="scoreboard">
+              <PropertyRef Name="fk_chip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_equipment_chips">
+          <End Role="chips" Type="Self.chips" Multiplicity="1" />
+          <End Role="equipment" Type="Self.equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chips">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="equipment">
+              <PropertyRef Name="fk_chip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_person_chiplink">
+          <End Role="persons" Type="Self.persons" Multiplicity="0..1" />
+          <End Role="chiplink" Type="Self.chiplink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="persons">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="chiplink">
+              <PropertyRef Name="person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_persons_permission">
+          <End Role="permissions" Type="Self.permissions" Multiplicity="1" />
+          <End Role="persons" Type="Self.persons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="permissions">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="persons">
+              <PropertyRef Name="fk_permission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_price_chiplink">
+          <End Role="prices" Type="Self.prices" Multiplicity="1" />
+          <End Role="chiplink" Type="Self.chiplink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prices">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="chiplink">
+              <PropertyRef Name="price_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Table_chips">
+          <End Role="chips" Type="Self.chips" Multiplicity="0..1" />
+          <End Role="covers" Type="Self.covers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chips">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="covers">
+              <PropertyRef Name="fk_chip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Table_station">
+          <End Role="stations" Type="Self.stations" Multiplicity="1" />
+          <End Role="covers" Type="Self.covers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stations">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="covers">
+              <PropertyRef Name="fk_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_track_scoreboard">
+          <End Role="tracks" Type="Self.tracks" Multiplicity="1" />
+          <End Role="scoreboard" Type="Self.scoreboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tracks">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="scoreboard">
+              <PropertyRef Name="fk_track_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db4ModelStoreContainer">
+          <EntitySet Name="chiplink" EntityType="Self.chiplink" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chips" EntityType="Self.chips" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="covers" EntityType="Self.covers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="equipment" EntityType="Self.equipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="permissions" EntityType="Self.permissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="persons" EntityType="Self.persons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prices" EntityType="Self.prices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scoreboard" EntityType="Self.scoreboard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="stations" EntityType="Self.stations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tracks" EntityType="Self.tracks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_chip_chiplink" Association="Self.FK_chip_chiplink">
+            <End Role="chips" EntitySet="chips" />
+            <End Role="chiplink" EntitySet="chiplink" />
+          </AssociationSet>
+          <AssociationSet Name="fk_chip_scoreboard" Association="Self.fk_chip_scoreboard">
+            <End Role="chips" EntitySet="chips" />
+            <End Role="scoreboard" EntitySet="scoreboard" />
+          </AssociationSet>
+          <AssociationSet Name="fk_equipment_chips" Association="Self.fk_equipment_chips">
+            <End Role="chips" EntitySet="chips" />
+            <End Role="equipment" EntitySet="equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_person_chiplink" Association="Self.FK_person_chiplink">
+            <End Role="persons" EntitySet="persons" />
+            <End Role="chiplink" EntitySet="chiplink" />
+          </AssociationSet>
+          <AssociationSet Name="FK_persons_permission" Association="Self.FK_persons_permission">
+            <End Role="permissions" EntitySet="permissions" />
+            <End Role="persons" EntitySet="persons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_price_chiplink" Association="Self.FK_price_chiplink">
+            <End Role="prices" EntitySet="prices" />
+            <End Role="chiplink" EntitySet="chiplink" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Table_chips" Association="Self.fk_Table_chips">
+            <End Role="chips" EntitySet="chips" />
+            <End Role="covers" EntitySet="covers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Table_station" Association="Self.fk_Table_station">
+            <End Role="stations" EntitySet="stations" />
+            <End Role="covers" EntitySet="covers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_track_scoreboard" Association="Self.fk_track_scoreboard">
+            <End Role="tracks" EntitySet="tracks" />
+            <End Role="scoreboard" EntitySet="scoreboard" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="chiplink">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="chip_id" />
+            <PropertyRef Name="price_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="person_id" Type="Int32" />
+          <Property Name="chip_id" Type="Int32" Nullable="false" />
+          <Property Name="price_id" Type="Int32" Nullable="false" />
+          <Property Name="startdate" Type="DateTime" Precision="3" />
+          <Property Name="enddate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="chips" Relationship="Self.FK_chip_chiplink" FromRole="chiplink" ToRole="chips" />
+          <NavigationProperty Name="persons" Relationship="Self.FK_person_chiplink" FromRole="chiplink" ToRole="persons" />
+          <NavigationProperty Name="prices" Relationship="Self.FK_price_chiplink" FromRole="chiplink" ToRole="prices" />
+        </EntityType>
+        <EntityType Name="chips">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="paid" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="chiplink" Relationship="Self.FK_chip_chiplink" FromRole="chips" ToRole="chiplink" />
+          <NavigationProperty Name="scoreboard" Relationship="Self.fk_chip_scoreboard" FromRole="chips" ToRole="scoreboard" />
+          <NavigationProperty Name="equipment" Relationship="Self.fk_equipment_chips" FromRole="chips" ToRole="equipment" />
+          <NavigationProperty Name="covers" Relationship="Self.fk_Table_chips" FromRole="chips" ToRole="covers" />
+        </EntityType>
+        <EntityType Name="covers">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_station_id" Type="Int32" Nullable="false" />
+          <Property Name="fk_chip_id" Type="Int32" />
+          <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="chips" Relationship="Self.fk_Table_chips" FromRole="covers" ToRole="chips" />
+          <NavigationProperty Name="stations" Relationship="Self.fk_Table_station" FromRole="covers" ToRole="stations" />
+        </EntityType>
+        <EntityType Name="equipment">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fk_chip_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="chips" Relationship="Self.fk_equipment_chips" FromRole="equipment" ToRole="chips" />
+        </EntityType>
+        <EntityType Name="permissions">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rolename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="persons" Relationship="Self.FK_persons_permission" FromRole="permissions" ToRole="persons" />
+        </EntityType>
+        <EntityType Name="persons">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="zipcode" Type="Int32" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="alias" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="public" Type="Boolean" />
+          <Property Name="fk_permission_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="chiplink" Relationship="Self.FK_person_chiplink" FromRole="persons" ToRole="chiplink" />
+          <NavigationProperty Name="permissions" Relationship="Self.FK_persons_permission" FromRole="persons" ToRole="permissions" />
+        </EntityType>
+        <EntityType Name="prices">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="chiplink" Relationship="Self.FK_price_chiplink" FromRole="prices" ToRole="chiplink" />
+        </EntityType>
+        <EntityType Name="scoreboard">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_chip_id" Type="Int32" Nullable="false" />
+          <Property Name="fk_track_id" Type="Int32" Nullable="false" />
+          <Property Name="start_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_time" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="chips" Relationship="Self.fk_chip_scoreboard" FromRole="scoreboard" ToRole="chips" />
+          <NavigationProperty Name="tracks" Relationship="Self.fk_track_scoreboard" FromRole="scoreboard" ToRole="tracks" />
+        </EntityType>
+        <EntityType Name="stations">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="covers" Relationship="Self.fk_Table_station" FromRole="stations" ToRole="covers" />
+        </EntityType>
+        <EntityType Name="tracks">
+          <Key>
+            <PropertyRef Name="pk_id" />
+          </Key>
+          <Property Name="pk_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="length" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pist" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="scoreboard" Relationship="Self.fk_track_scoreboard" FromRole="tracks" ToRole="scoreboard" />
+        </EntityType>
+        <Association Name="FK_chip_chiplink">
+          <End Role="chips" Type="Self.chips" Multiplicity="1" />
+          <End Role="chiplink" Type="Self.chiplink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chips">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="chiplink">
+              <PropertyRef Name="chip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_person_chiplink">
+          <End Role="persons" Type="Self.persons" Multiplicity="0..1" />
+          <End Role="chiplink" Type="Self.chiplink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="persons">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="chiplink">
+              <PropertyRef Name="person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_price_chiplink">
+          <End Role="prices" Type="Self.prices" Multiplicity="1" />
+          <End Role="chiplink" Type="Self.chiplink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prices">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="chiplink">
+              <PropertyRef Name="price_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_chip_scoreboard">
+          <End Role="chips" Type="Self.chips" Multiplicity="1" />
+          <End Role="scoreboard" Type="Self.scoreboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chips">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="scoreboard">
+              <PropertyRef Name="fk_chip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_equipment_chips">
+          <End Role="chips" Type="Self.chips" Multiplicity="1" />
+          <End Role="equipment" Type="Self.equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chips">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="equipment">
+              <PropertyRef Name="fk_chip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Table_chips">
+          <End Role="chips" Type="Self.chips" Multiplicity="0..1" />
+          <End Role="covers" Type="Self.covers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chips">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="covers">
+              <PropertyRef Name="fk_chip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Table_station">
+          <End Role="stations" Type="Self.stations" Multiplicity="1" />
+          <End Role="covers" Type="Self.covers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stations">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="covers">
+              <PropertyRef Name="fk_station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_persons_permission">
+          <End Role="permissions" Type="Self.permissions" Multiplicity="1" />
+          <End Role="persons" Type="Self.persons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="permissions">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="persons">
+              <PropertyRef Name="fk_permission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_track_scoreboard">
+          <End Role="tracks" Type="Self.tracks" Multiplicity="1" />
+          <End Role="scoreboard" Type="Self.scoreboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tracks">
+              <PropertyRef Name="pk_id" />
+            </Principal>
+            <Dependent Role="scoreboard">
+              <PropertyRef Name="fk_track_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db4Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="chiplink" EntityType="Self.chiplink" />
+          <EntitySet Name="chips" EntityType="Self.chips" />
+          <EntitySet Name="covers" EntityType="Self.covers" />
+          <EntitySet Name="equipment" EntityType="Self.equipment" />
+          <EntitySet Name="permissions" EntityType="Self.permissions" />
+          <EntitySet Name="persons" EntityType="Self.persons" />
+          <EntitySet Name="prices" EntityType="Self.prices" />
+          <EntitySet Name="scoreboard" EntityType="Self.scoreboard" />
+          <EntitySet Name="stations" EntityType="Self.stations" />
+          <EntitySet Name="tracks" EntityType="Self.tracks" />
+          <AssociationSet Name="FK_chip_chiplink" Association="Self.FK_chip_chiplink">
+            <End Role="chips" EntitySet="chips" />
+            <End Role="chiplink" EntitySet="chiplink" />
+          </AssociationSet>
+          <AssociationSet Name="FK_person_chiplink" Association="Self.FK_person_chiplink">
+            <End Role="persons" EntitySet="persons" />
+            <End Role="chiplink" EntitySet="chiplink" />
+          </AssociationSet>
+          <AssociationSet Name="FK_price_chiplink" Association="Self.FK_price_chiplink">
+            <End Role="prices" EntitySet="prices" />
+            <End Role="chiplink" EntitySet="chiplink" />
+          </AssociationSet>
+          <AssociationSet Name="fk_chip_scoreboard" Association="Self.fk_chip_scoreboard">
+            <End Role="chips" EntitySet="chips" />
+            <End Role="scoreboard" EntitySet="scoreboard" />
+          </AssociationSet>
+          <AssociationSet Name="fk_equipment_chips" Association="Self.fk_equipment_chips">
+            <End Role="chips" EntitySet="chips" />
+            <End Role="equipment" EntitySet="equipment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Table_chips" Association="Self.fk_Table_chips">
+            <End Role="chips" EntitySet="chips" />
+            <End Role="covers" EntitySet="covers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Table_station" Association="Self.fk_Table_station">
+            <End Role="stations" EntitySet="stations" />
+            <End Role="covers" EntitySet="covers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_persons_permission" Association="Self.FK_persons_permission">
+            <End Role="permissions" EntitySet="permissions" />
+            <End Role="persons" EntitySet="persons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_track_scoreboard" Association="Self.fk_track_scoreboard">
+            <End Role="tracks" EntitySet="tracks" />
+            <End Role="scoreboard" EntitySet="scoreboard" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db4ModelStoreContainer" CdmEntityContainer="db4Entities">
+          <EntitySetMapping Name="chiplink">
+            <EntityTypeMapping TypeName="db4Model.chiplink">
+              <MappingFragment StoreEntitySet="chiplink">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="person_id" ColumnName="person_id" />
+                <ScalarProperty Name="chip_id" ColumnName="chip_id" />
+                <ScalarProperty Name="price_id" ColumnName="price_id" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
+                <ScalarProperty Name="enddate" ColumnName="enddate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chips">
+            <EntityTypeMapping TypeName="db4Model.chips">
+              <MappingFragment StoreEntitySet="chips">
+                <ScalarProperty Name="pk_id" ColumnName="pk_id" />
+                <ScalarProperty Name="paid" ColumnName="paid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="covers">
+            <EntityTypeMapping TypeName="db4Model.covers">
+              <MappingFragment StoreEntitySet="covers">
+                <ScalarProperty Name="pk_id" ColumnName="pk_id" />
+                <ScalarProperty Name="fk_station_id" ColumnName="fk_station_id" />
+                <ScalarProperty Name="fk_chip_id" ColumnName="fk_chip_id" />
+                <ScalarProperty Name="time" ColumnName="time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="equipment">
+            <EntityTypeMapping TypeName="db4Model.equipment">
+              <MappingFragment StoreEntitySet="equipment">
+                <ScalarProperty Name="pk_id" ColumnName="pk_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="fk_chip_id" ColumnName="fk_chip_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="permissions">
+            <EntityTypeMapping TypeName="db4Model.permissions">
+              <MappingFragment StoreEntitySet="permissions">
+                <ScalarProperty Name="pk_id" ColumnName="pk_id" />
+                <ScalarProperty Name="rolename" ColumnName="rolename" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="persons">
+            <EntityTypeMapping TypeName="db4Model.persons">
+              <MappingFragment StoreEntitySet="persons">
+                <ScalarProperty Name="pk_id" ColumnName="pk_id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="public" ColumnName="public" />
+                <ScalarProperty Name="fk_permission_id" ColumnName="fk_permission_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prices">
+            <EntityTypeMapping TypeName="db4Model.prices">
+              <MappingFragment StoreEntitySet="prices">
+                <ScalarProperty Name="pk_id" ColumnName="pk_id" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scoreboard">
+            <EntityTypeMapping TypeName="db4Model.scoreboard">
+              <MappingFragment StoreEntitySet="scoreboard">
+                <ScalarProperty Name="pk_id" ColumnName="pk_id" />
+                <ScalarProperty Name="fk_chip_id" ColumnName="fk_chip_id" />
+                <ScalarProperty Name="fk_track_id" ColumnName="fk_track_id" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stations">
+            <EntityTypeMapping TypeName="db4Model.stations">
+              <MappingFragment StoreEntitySet="stations">
+                <ScalarProperty Name="pk_id" ColumnName="pk_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tracks">
+            <EntityTypeMapping TypeName="db4Model.tracks">
+              <MappingFragment StoreEntitySet="tracks">
+                <ScalarProperty Name="pk_id" ColumnName="pk_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="pist" ColumnName="pist" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

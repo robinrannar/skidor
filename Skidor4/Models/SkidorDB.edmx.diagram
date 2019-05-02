@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="11ea96a0f9354f55bfaf5aaafd43b331" Name="Diagram1">
+        <EntityTypeShape EntityType="db4Model.chiplink" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.chips" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.covers" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.equipment" Width="1.5" PointX="3" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.permissions" Width="1.5" PointX="1.5" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.persons" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.prices" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.scoreboard" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.stations" Width="1.5" PointX="3.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db4Model.tracks" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="db4Model.FK_chip_chiplink" ManuallyRouted="false" />
+        <AssociationConnector Association="db4Model.FK_person_chiplink" ManuallyRouted="false" />
+        <AssociationConnector Association="db4Model.FK_price_chiplink" ManuallyRouted="false" />
+        <AssociationConnector Association="db4Model.fk_chip_scoreboard" ManuallyRouted="false" />
+        <AssociationConnector Association="db4Model.fk_equipment_chips" ManuallyRouted="false" />
+        <AssociationConnector Association="db4Model.fk_Table_chips" ManuallyRouted="false" />
+        <AssociationConnector Association="db4Model.fk_Table_station" ManuallyRouted="false" />
+        <AssociationConnector Association="db4Model.FK_persons_permission" ManuallyRouted="false" />
+        <AssociationConnector Association="db4Model.fk_track_scoreboard" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
