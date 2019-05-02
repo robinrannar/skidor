@@ -1,0 +1,44 @@
+﻿@model Skidor4.Models.ViewModels.UserProfileViewModel
+
+@{
+    ViewBag.Title = "Profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="container profile-card-container">
+        <div class="profile-card">
+        @if (Model.chip != null)
+        {
+        <div class="profile-card-valid">
+            @if (Model.chip.isActive)
+            {
+                <div>
+                Giltigt till: @Model.chip.enddate
+                </div>
+            }
+            else
+            {
+                <div>
+                Gick ut: @Model.chip.enddate
+                </div>
+            }     
+        </div>
+        <div class="profile-card-id">
+        <div>No. @Model.chip.chip_id</div>
+        </div>
+        }
+            <div class="profile-card-name">
+                <div class="text-block">@Model.person.firstname @Model.person.lastname</div>
+            </div><img src="~/Content/img/static/avatar.jpg" srcset="~/Content/img/static/avatar.jpg 500w, ~/Content/img/static/avatar.jpg 600w" sizes="(max-width: 479px) 93.75px, 150px" class="profile-card-photo"><img src="~/Content/img/static/ostersunds-kommun-staare.png" srcset="~/Content/img/static/ostersunds-kommun-staare.png 500w, ~/Content/img/static/ostersunds-kommun-staare.png 600w" sizes="(max-width: 479px) 109.375px, 175px" class="profile-card-logo">
+            <div class="profile-card-shine"></div>
+        </div>
+    </div>
+    <div class="container profile-card-container m-top-25">
+        <div class="btn-group" role="group">
+            <button class="btn btn-primary bg-dark" type="button" onclick="location.href='@Url.Action("EditUser")'">Redigera personuppgifter</button>
+            <button class="btn btn-primary bg-dark" type="button" onclick="location.href='@Url.Action("ConnectChip")'">Chiphantering</button>
+            </div>
+        </div>
+        }

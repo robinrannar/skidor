@@ -1,0 +1,31 @@
+﻿@model Skidor4.Models.ViewModels.PublicHomeViewModel
+
+<div id="navbarCollapse">
+    <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+        <li class="dropdown order-1">
+            <button type="button" id="dropdownMenu1" data-toggle="dropdown" class="btn btn-light dropdown-toggle"><i class="fa fa-sign-in" aria-hidden="true"></i> Logga in <span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right mt-1">
+                <li class="p-3">
+
+                    @using (Html.BeginForm("Login", "Home", new { ReturnUrl = "Index" }, FormMethod.Post))
+                    {
+                    <form id="login-form" class="form" role="form">
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.alias, new { htmlAttributes = new { @class = "form-control form-control-sm", @placeholder = "Användarnamn" } })
+                            @Html.ValidationMessageFor(model => model.alias, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control form-control-sm", @placeholder = "Lösenord" } })
+                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                        </div>
+                        <button type="submit" value="Index" class="btn btn-primary bg-dark btn-block">Logga in</button>
+                    </form>
+                    }
+                    <br />
+                    <button type="submit" value="Index" class="btn btn-primary bg-dark btn-block" onclick="location.href='@Url.Action("Register","Home")'">Registrera dig</button>
+                    
+</li>
+            </ul>
+        </li>
+    </ul>
+</div>

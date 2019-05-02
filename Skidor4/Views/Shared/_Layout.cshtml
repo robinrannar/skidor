@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Östersunds skidspår och tävlingar</title>
+
+    <!-- Läs in CSS -->
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/style")
+    @Styles.Render("~/Content/fontawesome")
+
+</head>
+<body>
+    <div class="wrapper">
+        @Html.Partial("_NavBar")
+
+        <div class="ff">@RenderBody()</div>
+
+        @Html.Partial("_Footer")
+
+    </div>
+    <!-- Läs in JS -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+
+    @*<script>
+        function changeScoreboard(days) {
+            var date = days.getAttribute("data-dateTime");
+            var track = $('#dropdownMenuButton').text();
+
+            $.ajax({
+                type: "GET",
+                url: "ScoreboardByCondition",
+                data: { date: date, track: track },
+                async: true,
+                success: function (data) {
+                    $('#div_to_load_PartialView').html(data);
+                },
+            });
+        }
+    </script>
+    <script>
+        function changeTrackStatistic(days) {
+            var date = days.getAttribute("data-dateTime");
+
+            $.ajax({
+                type: "GET",
+                url: "TracksByCondition",
+                data: { date: date },
+                async: true,
+                success: function (data) {
+                    $('#div_to_load_PartialViewManager').html(data);
+                },
+            });
+        }
+    </script>
+    <script>
+        function changeCardStatistic(days) {
+            var date = days.getAttribute("data-dateTime");
+
+            $.ajax({
+                type: "GET",
+                url: "CardsByCondition",
+                data: { date: date },
+                async: true,
+                success: function (data) {
+                    $('#div_to_load_PartialViewManagerCard').html(data);
+                },
+            });
+        }
+    </script>
+
+    <script>
+        $(function () {
+
+            $("#SelectedUsedChip").change(function () {
+
+                var t = $(this).val();
+
+                $.ajax({
+                    type: "GET",
+                    url: "GetPersonId",
+                    data: { id: t},
+                    async: true
+                });
+
+            });
+        });
+
+    </script>
+
+    <script>
+        function changeValue(value) {
+            var track = null;
+            track = value.getAttribute("data-dateTime");
+            console.log(track);
+            $('#dropdownMenuButton').text(track);
+        }
+    </script>*@
+</body>
+</html>

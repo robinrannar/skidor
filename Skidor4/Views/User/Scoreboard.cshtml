@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Skidor4.Models.scoreboard>
+
+@{
+    ViewBag.Title = "Resultat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <table class="table s-table table-striped table-responsive-lg">
+        <thead class="s-table-head">
+            <tr>
+                <th scope="col">Starttid</th>
+                <th scope="col">Sluttid</th>
+                <th scope="col">Spårnamn</th>
+                <th scope="col">Totaltid</th>
+                <th scope="col">Mer information</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.start_time)</td>
+                    <td>@Html.DisplayFor(modelItem => item.end_time)</td>
+                    <td>@Html.DisplayFor(modelItem => item.tracks.name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.time)</td>
+                    <td><button class="btn btn-primary bg-dark" type="button" onclick="location.href='@Url.Action("UserStatistics", new {id = item.pk_id })'">Mer information</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

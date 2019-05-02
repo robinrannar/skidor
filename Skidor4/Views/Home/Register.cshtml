@@ -1,0 +1,73 @@
+﻿@model Skidor4.Models.ViewModels.PublicHomeViewModel
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="container s-table">
+        <form>
+            <div class="spacing">
+                <h4>Registrera ny användare</h4>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Person.firstname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Förnamn" } })
+                                @Html.ValidationMessageFor(model => model.Person.firstname, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Person.lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Efternamn" } })
+                                @Html.ValidationMessageFor(model => model.Person.lastname, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Person.alias, new { htmlAttributes = new { @class = "form-control", @placeholder = "Användar-ID" } })
+                                @Html.ValidationMessageFor(model => model.Person.alias, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Person.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Lösenord" } })
+                                @Html.ValidationMessageFor(model => model.Person.password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(model => model.Person.gender, new SelectList(new List<Object> { new { value = "Kvinna", text = "Kvinna" }, new { value = "Man", text = "Man" } }, "value", "text"), "Välj kön", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Person.gender, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(model => model.Person.@public, new SelectList(new List<Object> { new { value = "True", text = "Publik användare" }, new { value = "False", text = "Dold användare" } }, "value", "text"), "Välj publik eller dold", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Person.@public, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Person.adress, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gatuadress" } })
+                                @Html.ValidationMessageFor(model => model.Person.adress, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Person.zipcode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Postnummer" } })
+                                @Html.ValidationMessageFor(model => model.Person.zipcode, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Person.city, new { htmlAttributes = new { @class = "form-control", @placeholder = "Postort" } })
+                                @Html.ValidationMessageFor(model => model.Person.city, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Person.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "E-postadress" } })
+                                @Html.ValidationMessageFor(model => model.Person.email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group float-lg-right">
+                                <button class="btn btn-danger" type="button" onclick="location.href='@Url.Action("Index")'">Tillbaka</button>
+                                <input type="submit" value="Spara" data-wait="Vänligen vänta" class="btn btn-primary" onclick="location.href='@Url.Action("Register", "Home")'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

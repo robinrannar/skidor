@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Skidor4.Models.persons>
+
+@{
+    ViewBag.Title = "Skidåkare";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Users", "Manager", FormMethod.Get))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"><button class="btn btn-primary bg-dark" type="button" onclick="location.href='@Url.Action("Registration")'">Skapa ny användare</button></div>
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    @Html.TextBox("SearchInput", null, new { @class = "form-control" })
+                    <div class="input-group-append">
+                        <button id="SearchBtn" class="btn btn-primary bg-dark" type="submit">Sök</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container m-top-25">
+        <table class="table s-table table-striped table-responsive-lg">
+            <thead class="s-table-head">
+                <tr>
+                    <th scope="col">Förnamn</th>
+                    <th scope="col">Efternamn</th>
+                    <th scope="col">Postnummer</th>
+                    <th scope="col">E-Postadress</th>
+                    <th scope="col">Redigera</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.firstname)</td>
+                        <td>@Html.DisplayFor(modelItem => item.lastname)</td>
+                        <td>@Html.DisplayFor(modelItem => item.zipcode)</td>
+                        <td>@Html.DisplayFor(modelItem => item.email)</td>
+                        <td><button class="btn btn-primary bg-dark" type="button" onclick="location.href='@Url.Action("Edit", new {id = item.pk_id  })'">Redigera</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+  
+

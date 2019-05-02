@@ -1,0 +1,81 @@
+﻿@model Skidor4.Models.persons
+
+@{
+    ViewBag.Title = "Uppdatera profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.pk_id)
+        @Html.HiddenFor(model => model.fk_permission_id)
+    </div>
+        <div class="container s-table">
+            <form>
+                <div class="spacing">
+                    <h4>Redigera Personuppgifter</h4>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstname">Förnamn</label>
+                                    @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Förnamn" } })
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastname">Efternamn</label>
+                                    @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Efternamn" } })
+                                </div>
+                                <div class="form-group">
+                                    <label for="alias">Alias</label>
+                                    @Html.EditorFor(model => model.alias, new { htmlAttributes = new { @class = "form-control", @placeholder = "Användar-ID" } })
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Lösenord</label>
+                                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Lösenord" } })
+                                </div>
+                                <div class="form-group">
+                                    <label for="public">Publik användare</label>
+                                    @Html.DropDownListFor(model => model.@public, new SelectList(new List<Object> { new { value = "True", text = "Publik användare" }, new { value = "False", text = "Dold användare" } }, "value", "text"), new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="alias">Epostadress</label>
+                                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Kön</label>
+                                    @Html.DropDownListFor(model => model.gender, new SelectList(new List<Object> { new { value = "Kvinna", text = "Kvinna" }, new { value = "Man", text = "Man" } }, "value", "text"), new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="adress">Adress</label>
+                                    @Html.EditorFor(model => model.adress, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gatuadress" } })
+                                </div>
+                                <div class="form-group">
+                                    <label for="zipcode">Postnummer</label>
+                                    @Html.EditorFor(model => model.zipcode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Postnummer" } })
+                                </div>
+                                <div class="form-group">
+                                    <label for="City">Stad</label>
+                                    @Html.EditorFor(model => model.city, new { htmlAttributes = new { @class = "form-control", @placeholder = "Postort" } })
+                                </div>
+                                <div class="form-group float-lg-right">
+                                    <button class="btn btn-primary bg-dark" type="button" onclick="location.href='@Url.Action("Profile")'">Tillbaka</button>
+                                    <button class="btn btn-primary bg-dark" type="submit">Uppdatera</button>
+                                </div>                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        }
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Skidor4.Models.covers>
+
+@{
+    ViewBag.Title = "Statistik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <table class="table s-table table-striped">
+        <thead class="s-table-head">
+            <tr>
+                <th scope="col">Chipnummer</th>
+                <th scope="col">Station</th>
+                <th scope="col">Passeringstid</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.fk_chip_id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.stations.name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.time)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    

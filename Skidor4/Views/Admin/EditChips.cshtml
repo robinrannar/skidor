@@ -1,0 +1,42 @@
+﻿@model Skidor4.Models.ViewModels.EditChipViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <!-- Edit chips -->
+    @Html.HiddenFor(model => model.chiplink.chip_id)
+    @Html.HiddenFor(model => model.chiplink.price_id)
+    @Html.HiddenFor(model => model.paid)
+    @Html.HiddenFor(model => model.chiplink.person_id)
+    @Html.HiddenFor(model => model.Price)
+
+<div class="container s-table">
+    <div class="row s-table-head">
+        <div class="col-md-2">Förnamn</div>
+        <div class="col-md-2">Efternamn</div>
+        <div class="col-md-2">Startdatum</div>
+        <div class="col-md-2">Slutddatum</div>
+        <div class="col-md-2">Status</div>
+        <div class="col-md-2 text-right">Tillbaka</div>
+    </div>
+    <div class="row s-table-row">
+        <div class="col-md-2">@Html.EditorFor(model => model.chip.persons.firstname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Förnamn" } })</div>
+        <div class="col-md-2">@Html.EditorFor(model => model.chip.persons.lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Efternamn" } })</div>
+        <div class="col-md-2">@Html.EditorFor(model => model.startdate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Startdatum" } })</div>
+        <div class="col-md-2">@Html.EditorFor(model => model.enddate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Slutdatum" } })</div>
+        <div class="col-md-2">@Html.DropDownListFor(model => model.paid, new SelectList(new List<Object> { new { value = true, text = "Aktiv" }, new { value = false, text = "Ej Aktiv" } }, "value", "text"), new { @class = "form-control" })</div>
+        <div class="col-md-2 text-right"><button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Chips")'">Tillbaka</button></div>
+    </div>
+</div>
+}
+
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

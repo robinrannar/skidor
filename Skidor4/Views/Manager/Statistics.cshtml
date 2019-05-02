@@ -1,0 +1,102 @@
+﻿@model Skidor4.Models.ViewModels.ManagerStatisticsViewModel
+@{
+    ViewBag.Title = "Statistik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container s-table">
+    <div class="row s-table-head">
+        <div class="col-md-6">Mest trafikerade spår</div>
+        <div class="col-md-6 text-right">@Html.Action("FilterTracks", "Manager")</div>
+    </div>
+    <div class="row s-table-row" id="div_to_load_PartialViewManager">
+        @Html.Partial("FilteredTrackStatisticsVM", @Model)
+    </div>
+</div>
+
+<br />
+
+<div class="container s-table">
+    <div class="row s-table-head">
+        <div class="col-md-6">Sålda kort</div>
+        <div class="col-md-6 text-right">@Html.Action("FilterCards", "Manager")</div>
+    </div>
+    <div class="row s-table-row" id="div_to_load_PartialViewManagerCard">
+        @Html.Partial("FilteredCardStatisticsVM", @Model)
+    </div>
+</div>
+
+<div class="container m-top-25">
+    <div class="row">
+        <div class="col-sm-6">
+                <table class="table s-table table-striped">
+                    <thead class="s-table-head">
+                        <tr>
+                            <th scope="col">Tidsspann</th>
+                            <th scope="col">Antal sålda chips</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.soldChipTuple.Count(); i++)
+                         {
+                    <tr>
+                        <td>@Model.soldChipTuple[i].Item1</td>
+                        <td>@Model.soldChipTuple[i].Item2</td>
+                    </tr>
+                         }
+                    </tbody>
+                </table>
+
+        </div>
+        <div class="col-sm-6">
+                <table class="table s-table table-striped">
+                    <thead class="s-table-head">
+                        <tr>
+                            <th scope="col">Tidsspann</th>
+                            <th scope="col">Antal tjuvåkare</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.noChipTuple.Count(); i++)
+                        {
+                    <tr>
+                        <td>@Model.noChipTuple[i].Item1</td>
+                        <td>@Model.noChipTuple[i].Item2</td>
+                    </tr>
+                        }
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+
+            <div class="container m-top-25">
+                <table class="table s-table table-striped">
+                    <thead class="s-table-head">
+                        <tr>
+                            <th scope="col">Pistmaskin</th>
+                            <th scope="col">Senaste pistning</th>
+                            <th scope="col">Aktivitet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.EquipmentList)
+                        {
+                        <tr>
+                            <td>@item.name</td>
+                            <td>@item.time</td>
+                            <td>
+                                  @if (item.isActive)
+                                {
+                                     <span class="badge badge-success">Aktiv</span>
+                                }
+                                else
+                                {
+                                     <span class="badge badge-danger">Inaktiv</span>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>

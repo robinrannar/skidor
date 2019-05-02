@@ -1,0 +1,26 @@
+﻿@model Skidor4.Models.ViewModels.PublicHomeViewModel
+
+@using (Html.BeginForm())
+{
+    <div class="btn-group" role="group" aria-label="Basic example">
+        @foreach (var item in Model.TimeNameList)
+        {
+            <button type="button" class="btn btn-primary bg-dark btn-sm" onclick="changeScoreboard(this)" data-dateTime="@item">@item</button>
+        }
+        <button class="btn btn-primary bg-dark dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Välj Spår
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton" id="TrackList">
+            @foreach (var item in Model.TrackNameList)
+            {
+                <a href="#" class="dropdown-item" id="selectedTrack" value="@item" onclick="changeValue(this)" data-dateTime="@item">@item</a>
+            }
+        </div>
+    </div>
+
+
+
+}
+
+
+

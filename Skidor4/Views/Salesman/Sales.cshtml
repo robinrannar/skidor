@@ -1,0 +1,39 @@
+﻿@model Skidor4.Models.ViewModels.EditChipViewModel
+@{
+    ViewBag.Title = "Sales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <table class="table s-table table-striped table-responsive-lg">
+            <thead class="s-table-head">
+                <tr>
+                    <th scope="col">ChipID</th>
+                    <th scope="col">Priskategori</th>
+                    <th scope="col">Postnummer</th>
+                    <th scope="col">Startdatum</th>
+                    <th scope="col">Slutdatum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DropDownListFor(model => model.SelectedUnUsedChip, Model.UnUsedChips, new { @class = "form-control" })</td>
+                    <td>@Html.DropDownListFor(model => model.SelectedPriceCategory, Model.PriceCategories, new { @class = "form-control" })</td>
+                    <td>@Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })</td>
+                    <td>@Html.EditorFor(model => model.startdate, new { htmlAttributes = new { @class = "form-control" } })</td>
+                    <td>@Html.EditorFor(model => model.enddate, new { htmlAttributes = new { @class = "form-control" } })</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-right"><button class="btn btn-danger" type="button" onclick="location.href='@Url.Action("Index", "Salesman")'">Tillbaka</button> <button class="btn btn-primary bg-dark" type="submit">Sälj</button></div>
+        </div>
+    </div>
+        }

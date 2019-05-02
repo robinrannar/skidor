@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Skidor4.Models.covers>
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string active = "";
+}
+
+<div class="container">
+    <button class="btn btn-primary bg-dark" type="button" onclick="location.href='@Url.Action("AddStationRegistration")'">Skapa ny</button>
+</div>
+
+
+<div class="container m-top-25">
+    <table class="table s-table table-striped table-responsive-lg">
+        <thead class="s-table-head">
+            <tr>
+                <th scope="col">Chipnummer</th>
+                <th scope="col">Station</th>
+                <th scope="col">Registreringstid</th>
+                <th scope="col">Chipstatus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.noChip)</td>
+                <td>@Html.DisplayFor(modelItem => item.stations.name)</td>
+                <td>@Convert.ToDateTime(item.time)</td>
+                <td>@if (item.isActive == true) { <span class="badge badge-success">Aktivt</span> } else { <span class="badge badge-danger">Ej Aktivt</span> } @active</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    </div>

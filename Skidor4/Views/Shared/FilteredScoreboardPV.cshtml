@@ -1,0 +1,69 @@
+﻿@model Skidor4.Models.ViewModels.PublicHomeViewModel
+
+<div class="container">
+    <table class="table s-table table-striped table-responsive-lg">
+        <thead class="s-table-head">
+            <tr>
+                <th scope="col">Placering</th>
+                <th scope="col">Alias</th>
+                <th scope="col">Spårnamn</th>
+                <th scope="col">Medelhastighet</th>
+                <th scope="col">Totaltid</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.scoreList != null)
+            {
+                foreach (var item in Model.scoreList)
+                {
+                    <tr>
+                        <td>@item.placement</td>
+                        <td>@item.alias</td>
+                        <td>@item.tracks.name</td>
+                        <td>@item.speed km/h</td>
+                        <td>@item.time</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (Model.personalScore?.placement == 0 || Model.personalScore == null)
+        {
+            <div class="alert alert-primary" role="alert">
+                Du har inget personligt rekord som stämmer in med filteringen. Kör ett varv och var med vettja!
+            </div>
+        }
+
+        else if (Model.personalScore.placement <= 10 && Model.personalScore.placement != 0)
+        {
+            <div class="alert alert-primary" role="alert">
+                Du är redan med i topplistan. Grattis!
+            </div>
+        }
+
+        else if (!Model.scoreList.Any())
+        {
+            <div class="alert alert-primary" role="alert">
+                Ingen har kvalat in i topplistan ännu. Ut i spåret fort så får du en garanterad plats!
+            </div>
+        }
+
+        else
+        {
+            <div class="alert alert-primary" role="alert">
+                Din placering är @Model.personalScore.placement och du behöver åka @Model.moreKm km/h snabbare för att kvala in på topplistan (@Model.moreSpeed fortare).
+            </div>
+        }
+
+
+    }
+
+
+
+</div>
+
+

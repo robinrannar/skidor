@@ -1,0 +1,74 @@
+﻿@model Skidor4.Models.ViewModels.CreateUserViewModel
+
+@{
+    ViewBag.Title = "Uppdatera";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <!-- <div class="form-horizontal"> -->
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Person.pk_id)
+        @Html.HiddenFor(model => model.Permission.pk_id)        
+    <!-- </div> -->
+    <div class="container s-table">
+        <form>
+            <div class="spacing">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="firstname">Förnamn</label>
+                            @Html.EditorFor(model => model.Person.firstname, new { htmlAttributes = new { @class = "form-control"} })
+
+                            <label for="lastname">Efternamn</label>
+                            @Html.EditorFor(model => model.Person.lastname, new { htmlAttributes = new { @class = "form-control" } })
+
+                            <label for="alias">Alias</label>
+                            @Html.EditorFor(model => model.Person.alias, new { htmlAttributes = new { @class = "form-control" } })
+
+                            <label for="password">Lösenord</label>
+                            @Html.EditorFor(model => model.Person.password, new { htmlAttributes = new { @class = "form-control"} })
+
+                            <label for="alias">Epost</label>
+                            @Html.EditorFor(model => model.Person.email, new { htmlAttributes = new { @class = "form-control" } })
+
+                            <label for="public">Publik användare</label>
+                            @Html.DropDownListFor(model => model.Person.@public, new SelectList(new List<Object> { new { value = "True", text = "Publik användare" }, new { value = "False", text = "Dold användare" } }, "value", "text"), new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-6">
+                            <label for="gender">Kön</label>
+                            @Html.DropDownListFor(model => model.Person.gender, new SelectList(new List<Object> { new { value = "Kvinna", text = "Kvinna" }, new { value = "Man", text = "Man" } }, "value", "text"), new { @class = "form-control" })
+
+                            <label for="adress">Adress</label>
+                            @Html.EditorFor(model => model.Person.adress, new { htmlAttributes = new { @class = "form-control" } })
+
+                            <label for="zipcode">Postnummer</label>
+                            @Html.EditorFor(model => model.Person.zipcode, new { htmlAttributes = new { @class = "form-control" } })
+
+                            <label for="City">Stad</label>
+                            @Html.EditorFor(model => model.Person.city, new { htmlAttributes = new { @class = "form-control"} })
+
+                            <label for="role">Nuvarande Roll</label>
+                            @Html.EditorFor(model => model.Permission.rolename, new { htmlAttributes = new { @class = "form-control"} })
+
+                            <label for="role">Uppdatera Roll</label>
+                            @Html.DropDownListFor(model => model.chosenPermission, new SelectList(Model.Permissions, "pk_id", "rolename"), new { @class = "form-control" })
+
+                            <div class="container">
+                                <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Users")'">Tillbaka</button>
+                                <button class="btn btn-primary" type="submit">Uppdatera</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

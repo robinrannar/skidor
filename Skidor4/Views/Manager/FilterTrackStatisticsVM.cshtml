@@ -1,0 +1,11 @@
+﻿@model Skidor4.Models.ViewModels.ManagerStatisticsViewModel
+
+@using (Html.BeginForm())
+{
+    <div class="btn-group" role="group" aria-label="Basic example">
+        @foreach (var item in Model.TimeNameList)
+        {
+            <button type="button" class="btn btn-primary bg-dark" onclick="changeTracks(this)" data-dateTime="@item">@item</button>
+        }
+    </div>
+}

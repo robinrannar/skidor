@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <button class="btn btn-primary bg-dark btn-block" type="button" onclick="location.href='@Url.Action("Sales", "Salesman")'">Sälja Chip</button>
+    <button class="btn btn-primary bg-dark btn-block" type="button" onclick="location.href='@Url.Action("UpdateSales", "Salesman")'">Uppdatera Chip</button>
+</div>
+
+
+

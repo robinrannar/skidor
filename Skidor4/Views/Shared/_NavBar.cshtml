@@ -1,0 +1,67 @@
+﻿
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href=@Url.Action("Index", "Home")><img src="~/Content/img/static/ostersunds-kommun-staare.png" height="40" /></a>
+
+        <!-- GUEST -->
+
+            @if (!User.Identity.IsAuthenticated)
+            {
+                     @Html.Partial("_Login")
+            }
+            @if (User.Identity.IsAuthenticated)
+        {
+            <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+                <li class="dropdown order-1">
+                    <button type="button" id="dropdownMenu1" data-toggle="dropdown" class="btn btn-outline-light dropdown-toggle">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        @User.Identity.Name
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right mt-1" id="user-dropdown-menu">
+                        <li class="user-link">
+                            <a class="menu-link" href='@Url.Action("Profile", "User")'>Min Profil</a>
+                        </li>
+                        <li class="user-link">
+                            <a class="menu-link" href='@Url.Action("Scoreboard", "User")'>Min statistik</a>
+                        </li>
+                        <!-- Länkar beroende på roll -->
+                        @if (Roles.IsUserInRole(User.Identity.Name, "Admin"))
+                    {
+                        <li class="user-link">
+                            <a class="menu-link" href='@Url.Action("StationRegistration", "Admin")'>Registrerade åkare</a>
+                        </li>
+                        <li class="user-link">
+                            <a class="menu-link" href='@Url.Action("Chips", "Admin")'>Chip</a>
+                        </li>
+                        <li class="user-link">
+                            <a class="menu-link" href='@Url.Action("Equipment", "Admin")'>Pistmaskiner</a>
+                        </li>
+                }
+                        @if (Roles.IsUserInRole(User.Identity.Name, "Manager"))
+                    {
+                        <li class="user-link">
+                            <a class="menu-link" href='@Url.Action("Statistics", "Manager")'>Statistik</a>
+                        </li>
+                        <li class="user-link">
+                            <a class="menu-link" href='@Url.Action("Users", "Manager")'>Användare</a>
+                        </li>
+                        }
+                        @if (Roles.IsUserInRole(User.Identity.Name, "Salesman"))
+                    {
+                        <li class="user-link">
+                            <a class="menu-link" href='@Url.Action("Index", "Salesman")'>Försäljning</a>
+                        </li>
+                }
+                        <!-- Logga ut -->
+                        <li id="logout-link">
+                            <a class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#logout-modal"><i class="fa fa-sign-out" aria-hidden="true"></i>Logga ut</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+    }
+        </div>
+</nav>
+
+@Html.Partial("_NavModal")

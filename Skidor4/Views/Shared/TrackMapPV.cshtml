@@ -1,0 +1,22 @@
+﻿@model Skidor4.Models.ViewModels.PublicHomeViewModel
+
+@using (Html.BeginForm())
+{
+
+
+    if (Model.mapImgUrl == null)
+    {
+        <div class="trackimg">
+            <img src="../content/img/static/all.png" alt="TrackMap">
+        </div>
+    }
+    else
+    {
+        <div class="trackimg">
+            <img src="@Model.mapImgUrl" alt="TrackMap">
+        </div>
+    }
+
+}
+
+

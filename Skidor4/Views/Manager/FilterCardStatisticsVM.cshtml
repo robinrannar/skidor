@@ -1,0 +1,38 @@
+﻿@model Skidor4.Models.ViewModels.ManagerStatisticsViewModel
+
+
+@using (Html.BeginForm())
+{
+    <div class="btn-group" role="group" aria-label="Basic example">
+        @foreach (var item in Model.TimeNameList)
+        {
+            <button type="button" class="btn btn-primary bg-dark" onclick="changeCards(this)" data-dateTime="@item">@item</button>
+        }
+    </div>
+}
+
+@*@using (Html.BeginForm())
+{
+    <div class="btn-group" role="group" aria-label="Basic example">
+        @foreach (var item in Model.TimeNameList)
+        {
+            <button type="button" class="btn btn-secondary" onclick="changeCardStatistic(this)" data-dateTime="@item">@item</button>
+        }
+    </div>
+}*@
+
+@*<script>
+        function changeCardStatistic(days) {
+                var date = days.getAttribute("data-dateTime");
+
+                $.ajax({
+                    type: "GET",
+                    url: "CardsByCondition",
+                    data: { date: date },
+                    async: true,
+                    success: function (data) {
+                        $('#div_to_load_PartialViewManagerCard').html(data);
+                    },
+                });
+            }
+    </script>*@

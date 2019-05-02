@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Skidor4.Models.equipment>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <button class="btn btn-primary bg-dark" type="button" onclick="location.href='@Url.Action("EquipmentRegistration")'">Skapa ny</button>
+</div>
+
+<div class="container m-top-25">
+    <table class="table s-table table-striped table-responsive-lg">
+        <thead class="s-table-head">
+            <tr>
+                <th scope="col">Chipnummer</th>
+                <th scope="col">Pistmaskin</th>
+                <th scope="col">Redigera</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.fk_chip_id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.name)</td>
+                    <td><button class="btn btn-primary bg-dark" type="button" onclick="location.href='@Url.Action("EditEquipment", new {id = item.pk_id })'">Redigera</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
